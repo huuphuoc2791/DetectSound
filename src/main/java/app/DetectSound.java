@@ -81,6 +81,7 @@ public class DetectSound implements PitchDetectionHandler {
     }
 
     public int detect() {
+        //phuoc
         start();
         return result;
     }
