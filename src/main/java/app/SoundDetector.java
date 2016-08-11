@@ -24,7 +24,7 @@ public class SoundDetector implements SoundDetectionHandler {
 
     }
 
-    private void setOnSoundDetected(ISoundDetector soundDetector) {
+    public void setOnSoundDetected(ISoundDetector soundDetector) {
         this.iSoundDetector = soundDetector;
     }
 
@@ -41,7 +41,7 @@ public class SoundDetector implements SoundDetectionHandler {
             }
         }
 
-        //  this.iSoundDetector.onDetected();
+          this.iSoundDetector.onDetected();
         try {
             setNewMixer(newValue);
         } catch (LineUnavailableException | UnsupportedAudioFileException e) {
@@ -80,15 +80,7 @@ public class SoundDetector implements SoundDetectionHandler {
         new Thread(dispatcher, "Audio dispatching").start();
     }
 
-    public static void main(String[] args) {
-        SoundDetector soundDetector = new SoundDetector();
-        soundDetector.setOnSoundDetected((sd) -> {
-            // TODO: 8/11/16
-            System.out.print("Detected");
-            sd.detect();
-        });
-//        soundDetector.run();
-    }
+
 
 
     @Override
