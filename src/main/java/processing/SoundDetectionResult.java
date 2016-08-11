@@ -1,24 +1,24 @@
 
-package pitch;
+package processing;
 
-public class PitchDetectionResult {
+public class SoundDetectionResult {
 	private float pitch;
 	
 	private float probability;
 	
 	private boolean pitched;
 	
-	public PitchDetectionResult(){
+	public SoundDetectionResult(){
 		pitch = -1;
 		probability = -1;
 		pitched = false;
 	}
 	
 	/**
-	 * A copy constructor. Since PitchDetectionResult objects are reused for performance reasons, creating a copy can be practical.
+	 * A copy constructor. Since SoundDetectionResult objects are reused for performance reasons, creating a copy can be practical.
 	 * @param other
 	 */
-	public PitchDetectionResult(PitchDetectionResult other){
+	public SoundDetectionResult(SoundDetectionResult other){
 		this.pitch = other.pitch;
 		this.probability = other.probability;
 		this.pitched = other.pitched;
@@ -26,7 +26,7 @@ public class PitchDetectionResult {
 		 
 	
 	/**
-	 * @return The pitch in Hertz.
+	 * @return The processing in Hertz.
 	 */
 	public float getPitch() {
 		return pitch;
@@ -39,15 +39,15 @@ public class PitchDetectionResult {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#clone()
 	 */
-	public PitchDetectionResult clone(){
-		return new PitchDetectionResult(this);
+	public SoundDetectionResult clone(){
+		return new SoundDetectionResult(this);
 	}
 
 	/**
 	 * @return A probability (noisiness, (a)periodicity, salience, voicedness or
-	 *         clarity measure) for the detected pitch. This is somewhat similar
+	 *         clarity measure) for the detected processing. This is somewhat similar
 	 *         to the term voiced which is used in speech recognition. This
-	 *         probability should be calculated together with the pitch. The
+	 *         probability should be calculated together with the processing. The
 	 *         exact meaning of the value depends on the detector used.
 	 */
 	public float getProbability() {
@@ -61,7 +61,7 @@ public class PitchDetectionResult {
 	/**
 	 * @return Whether the algorithm thinks the block of audio is pitched. Keep
 	 *         in mind that an algorithm can come up with a best guess for a
-	 *         pitch even when isPitched() is false.
+	 *         processing even when isPitched() is false.
 	 */
 	public boolean isPitched() {
 		return pitched;

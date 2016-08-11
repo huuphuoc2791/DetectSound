@@ -1,17 +1,17 @@
-package pitch;
+package processing;
 
 import io.AudioEvent;
 import io.AudioProcessor;
 
-public class PitchProcessor implements AudioProcessor {
-	public enum PitchEstimationAlgorithm {
+public class SoundProcessor implements AudioProcessor {
+	public enum ESoundEstimationAlgorithm {
 
 		YIN,
 
 		FFT_YIN;
 
-		public PitchDetector getDetector(float sampleRate,int bufferSize){
-			PitchDetector detector;
+		public ISoundDetector getDetector(float sampleRate, int bufferSize){
+			ISoundDetector detector;
 			if(this == FFT_YIN){
 				detector = new FastYin(sampleRate, bufferSize);
 			}else {
@@ -23,15 +23,15 @@ public class PitchProcessor implements AudioProcessor {
 	};
 	
 	/**
-	 * The underlying pitch detector;
+	 * The underlying processing detector;
 	 */
-	private final PitchDetector detector;
+	private final ISoundDetector detector;
 	
-	private final PitchDetectionHandler handler;
+	private final SoundDetectionHandler handler;
 
-	public PitchProcessor(PitchEstimationAlgorithm algorithm, float sampleRate,
-			int bufferSize,
-			PitchDetectionHandler handler) {
+	public SoundProcessor(ESoundEstimationAlgorithm algorithm, float sampleRate,
+						  int bufferSize,
+						  SoundDetectionHandler handler) {
 		detector = algorithm.getDetector(sampleRate, bufferSize);
 		this.handler = handler;	
 	}
@@ -40,10 +40,10 @@ public class PitchProcessor implements AudioProcessor {
 	public boolean process(AudioEvent audioEvent) {
 		float[] audioFloatBuffer = audioEvent.getFloatBuffer();
 		
-		PitchDetectionResult result = detector.getPitch(audioFloatBuffer);
+		SoundDetectionResult result = detector.getSound(audioFloatBuffer);
 		
 		
-		handler.handlePitch(result,audioEvent);
+		handler.handleSound(result,audioEvent);
 		return true;
 	}
 

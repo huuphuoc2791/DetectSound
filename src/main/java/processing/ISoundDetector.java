@@ -1,5 +1,5 @@
-package pitch;
+package processing;
 
-public interface PitchDetector {
-	PitchDetectionResult getPitch(final float[] audioBuffer);
+public interface ISoundDetector {
+	SoundDetectionResult getSound(final float[] audioBuffer);
 }

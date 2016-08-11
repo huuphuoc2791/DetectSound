@@ -4,22 +4,35 @@ import io.AudioDispatcher;
 import io.AudioEvent;
 import io.Shared;
 import jvm.JVMAudioInputStream;
-import pitch.PitchDetectionHandler;
-import pitch.PitchDetectionResult;
-import pitch.PitchProcessor;
-import pitch.PitchProcessor.PitchEstimationAlgorithm;
+import processing.SoundDetectionHandler;
+import processing.SoundDetectionResult;
+import processing.SoundProcessor;
+import processing.SoundProcessor.ESoundEstimationAlgorithm;
 
 import javax.sound.sampled.*;
 
-public class DetectSound implements PitchDetectionHandler {
+public class SoundDetector implements SoundDetectionHandler {
 
     private AudioDispatcher dispatcher;
+    private ISoundDetector iSoundDetector;
 
-    private PitchEstimationAlgorithm algo;
+    public void start() {
+
+    }
+
+    public void stop() {
+
+    }
+
+    private void setOnSoundDetected(ISoundDetector soundDetector) {
+        this.iSoundDetector = soundDetector;
+    }
+
+    private ESoundEstimationAlgorithm algo;
     private int result;
 
-    private void start() {
-        algo = PitchEstimationAlgorithm.YIN;
+    private void run() {
+        algo = ESoundEstimationAlgorithm.YIN;
         System.out.println("Start:");
         Mixer newValue = null;
         for (Mixer.Info info : Shared.getMixerInfo(false, true)) {
@@ -27,6 +40,8 @@ public class DetectSound implements PitchDetectionHandler {
                 newValue = AudioSystem.getMixer(info);
             }
         }
+
+        //  this.iSoundDetector.onDetected();
         try {
             setNewMixer(newValue);
         } catch (LineUnavailableException | UnsupportedAudioFileException e) {
@@ -60,29 +75,35 @@ public class DetectSound implements PitchDetectionHandler {
                 overlap);
 
         // add a processor
-        dispatcher.addAudioProcessor(new PitchProcessor(algo, sampleRate, bufferSize, this));
+        dispatcher.addAudioProcessor(new SoundProcessor(algo, sampleRate, bufferSize, this));
 
         new Thread(dispatcher, "Audio dispatching").start();
     }
 
     public static void main(String[] args) {
-        DetectSound detectSound = new DetectSound();
-        detectSound.start();
+        SoundDetector soundDetector = new SoundDetector();
+        soundDetector.setOnSoundDetected((sd) -> {
+            // TODO: 8/11/16
+            System.out.print("Detected");
+            sd.detect();
+        });
+//        soundDetector.run();
     }
 
 
     @Override
-    public void handlePitch(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent) {
-        if (pitchDetectionResult.getPitch() != -1) {
-            float pitch = pitchDetectionResult.getPitch();
+    public void handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent) {
+        if (soundDetectionResult.getPitch() != -1) {
+            float pitch = soundDetectionResult.getPitch();
             result = (int) Math.floor(pitch);
             System.out.println(result);
         }
     }
 
     public int detect() {
-        start();
+        run();
         return result;
     }
+
 
 }

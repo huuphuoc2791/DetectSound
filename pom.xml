@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>app.DetectSound</mainClass>
+                            <mainClass>app.SoundDetector</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -44,7 +44,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>app.DetectSound</mainClass>
+                            <mainClass>app.SoundDetector</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

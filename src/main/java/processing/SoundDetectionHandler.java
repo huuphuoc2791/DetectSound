@@ -1,7 +1,7 @@
-package pitch;
+package processing;
 
 import io.AudioEvent;
 
-public interface PitchDetectionHandler {
-    void  handlePitch(PitchDetectionResult pitchDetectionResult, AudioEvent audioEvent);
+public interface SoundDetectionHandler {
+    void handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent);
 }

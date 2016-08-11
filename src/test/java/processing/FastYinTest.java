@@ -1,8 +1,6 @@
-package pitch;
+package processing;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by huuphuoc on 7/20/16.

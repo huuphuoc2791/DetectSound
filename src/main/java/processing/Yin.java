@@ -1,6 +1,6 @@
-package pitch;
+package processing;
 
-final class Yin implements PitchDetector {
+final class Yin implements ISoundDetector {
 
 	private static final double DEFAULT_THRESHOLD = 0.20;
 
@@ -31,12 +31,12 @@ final class Yin implements PitchDetector {
 	private final float[] yinBuffer;
 	
 	/**
-	 * The result of the pitch detection iteration.
+	 * The result of the processing detection iteration.
 	 */
-	private final PitchDetectionResult result;
+	private final SoundDetectionResult result;
 
 	/**
-	 * Create a new pitch detector for a stream with the defined sample rate.
+	 * Create a new processing detector for a stream with the defined sample rate.
 	 * Processes the audio in blocks of the defined size.
 	 * 
 	 * @param audioSampleRate
@@ -49,7 +49,7 @@ final class Yin implements PitchDetector {
 	}
 
 	/**
-	 * Create a new pitch detector for a stream with the defined sample rate.
+	 * Create a new processing detector for a stream with the defined sample rate.
 	 * Processes the audio in blocks of the defined size.
 	 * 
 	 * @param audioSampleRate
@@ -58,22 +58,22 @@ final class Yin implements PitchDetector {
 	 *            The size of a buffer. E.g. 1024.
 	 * @param yinThreshold
 	 *            The parameter that defines which peaks are kept as possible
-	 *            pitch candidates. See the YIN paper for more details.
+	 *            processing candidates. See the YIN paper for more details.
 	 */
 	public Yin(final float audioSampleRate, final int bufferSize, final double yinThreshold) {
 		this.sampleRate = audioSampleRate;
 		this.threshold = yinThreshold;
 		yinBuffer = new float[bufferSize / 2];
-		result = new PitchDetectionResult();
+		result = new SoundDetectionResult();
 	}
 
 	/**
-	 * The app flow of the YIN algorithm. Returns a pitch value in Hz or -1 if
-	 * no pitch is detected.
+	 * The app flow of the YIN algorithm. Returns a processing value in Hz or -1 if
+	 * no processing is detected.
 	 * 
-	 * @return a pitch value in Hz or -1 if no pitch is detected.
+	 * @return a processing value in Hz or -1 if no processing is detected.
 	 */
-	public PitchDetectionResult getPitch(final float[] audioBuffer) {
+	public SoundDetectionResult getSound(final float[] audioBuffer) {
 
 		final int tauEstimate;
 		final float pitchInHertz;
@@ -100,7 +100,7 @@ final class Yin implements PitchDetector {
 			// conversion to Hz
 			pitchInHertz = sampleRate / betterTau;
 		} else{
-			// no pitch found
+			// no processing found
 			pitchInHertz = -1;
 		}
 		
@@ -163,7 +163,7 @@ final class Yin implements PitchDetector {
 		}
 
 		
-		// if no pitch found, tau => -1
+		// if no processing found, tau => -1
 		if (tau == yinBuffer.length || yinBuffer[tau] >= threshold) {
 			tau = -1;
 			result.setProbability(0);

@@ -1,8 +1,8 @@
-package pitch;
+package processing;
 
 import util.FFT;
 
-final class FastYin implements PitchDetector {
+final class FastYin implements ISoundDetector {
 	/**
 	 * The default YIN threshold value. Should be around 0.10~0.15. See YIN
 	 * paper for more information.
@@ -36,9 +36,9 @@ final class FastYin implements PitchDetector {
 	private final float[] yinBuffer;	
 	
 	/**
-	 * The result of the pitch detection iteration.
+	 * The result of the processing detection iteration.
 	 */
-	private final PitchDetectionResult result;
+	private final SoundDetectionResult result;
 	
 	//------------------------ FFT instance members
 	
@@ -63,7 +63,7 @@ final class FastYin implements PitchDetector {
 	private final FFT fft;
 
 	/**
-	 * Create a new pitch detector for a stream with the defined sample rate.
+	 * Create a new processing detector for a stream with the defined sample rate.
 	 * Processes the audio in blocks of the defined size.
 	 * 
 	 * @param audioSampleRate
@@ -76,7 +76,7 @@ final class FastYin implements PitchDetector {
 	}
 
 	/**
-	 * Create a new pitch detector for a stream with the defined sample rate.
+	 * Create a new processing detector for a stream with the defined sample rate.
 	 * Processes the audio in blocks of the defined size.
 	 * 
 	 * @param audioSampleRate
@@ -85,7 +85,7 @@ final class FastYin implements PitchDetector {
 	 *            The size of a buffer. E.g. 1024.
 	 * @param yinThreshold
 	 *            The parameter that defines which peaks are kept as possible
-	 *            pitch candidates. See the YIN paper for more details.
+	 *            processing candidates. See the YIN paper for more details.
 	 */
 	public FastYin(final float audioSampleRate, final int bufferSize, final double yinThreshold) {
 		this.sampleRate = audioSampleRate;
@@ -96,16 +96,16 @@ final class FastYin implements PitchDetector {
 		kernel = new float[2*bufferSize];
 		yinStyleACF = new float[2*bufferSize];
 		fft = new FFT(bufferSize);
-		result = new PitchDetectionResult();
+		result = new SoundDetectionResult();
 	}
 
 	/**
-	 * The app flow of the YIN algorithm. Returns a pitch value in Hz or -1 if
-	 * no pitch is detected.
+	 * The app flow of the YIN algorithm. Returns a processing value in Hz or -1 if
+	 * no processing is detected.
 	 * 
-	 * @return a pitch value in Hz or -1 if no pitch is detected.
+	 * @return a processing value in Hz or -1 if no processing is detected.
 	 */
-	public PitchDetectionResult getPitch(final float[] audioBuffer) {
+	public SoundDetectionResult getSound(final float[] audioBuffer) {
 
 		final int tauEstimate;
 		final float pitchInHertz;
@@ -132,7 +132,7 @@ final class FastYin implements PitchDetector {
 			// conversion to Hz
 			pitchInHertz = sampleRate / betterTau;
 		} else{
-			// no pitch found
+			// no processing found
 			pitchInHertz = -1;
 		}
 		
@@ -235,7 +235,7 @@ final class FastYin implements PitchDetector {
 		}
 
 		
-		// if no pitch found, tau => -1
+		// if no processing found, tau => -1
 		if (tau == yinBuffer.length || yinBuffer[tau] >= threshold || result.getProbability() > 1.0) {
 			tau = -1;
 			result.setProbability(0);
