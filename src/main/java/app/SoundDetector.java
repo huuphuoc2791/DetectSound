@@ -4,6 +4,8 @@ import io.AudioDispatcher;
 import io.AudioEvent;
 import io.Shared;
 import jvm.JVMAudioInputStream;
+
+
 import processing.SoundDetectionHandler;
 import processing.SoundDetectionResult;
 import processing.SoundProcessor;
@@ -96,6 +98,7 @@ public class SoundDetector implements SoundDetectionHandler {
         run();
         return result;
     }
+
 
 
 }

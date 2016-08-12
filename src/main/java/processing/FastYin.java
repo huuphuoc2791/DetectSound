@@ -2,7 +2,7 @@ package processing;
 
 import util.FFT;
 
-final class FastYin implements ISoundDetector {
+final class FastYin implements ISoundDetection {
 	/**
 	 * The default YIN threshold value. Should be around 0.10~0.15. See YIN
 	 * paper for more information.

@@ -1,6 +1,6 @@
 package processing;
 
-final class Yin implements ISoundDetector {
+final class Yin implements ISoundDetection {
 
 	private static final double DEFAULT_THRESHOLD = 0.20;
 

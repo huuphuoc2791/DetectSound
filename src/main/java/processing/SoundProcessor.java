@@ -10,8 +10,8 @@ public class SoundProcessor implements AudioProcessor {
 
 		FFT_YIN;
 
-		public ISoundDetector getDetector(float sampleRate, int bufferSize){
-			ISoundDetector detector;
+		public ISoundDetection getDetector(float sampleRate, int bufferSize){
+			ISoundDetection detector;
 			if(this == FFT_YIN){
 				detector = new FastYin(sampleRate, bufferSize);
 			}else {
@@ -25,7 +25,7 @@ public class SoundProcessor implements AudioProcessor {
 	/**
 	 * The underlying processing detector;
 	 */
-	private final ISoundDetector detector;
+	private final ISoundDetection detector;
 	
 	private final SoundDetectionHandler handler;
 

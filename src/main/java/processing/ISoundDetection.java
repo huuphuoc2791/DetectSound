@@ -1,5 +1,7 @@
 package processing;
 
-public interface ISoundDetector {
+
+public interface ISoundDetection {
 	SoundDetectionResult getSound(final float[] audioBuffer);
+
 }
