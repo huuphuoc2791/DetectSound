@@ -1,6 +1,6 @@
 package io;
 
-public interface AudioProcessor {
+public interface IAudioProcessor {
 
     boolean process(AudioEvent audioEvent);
 

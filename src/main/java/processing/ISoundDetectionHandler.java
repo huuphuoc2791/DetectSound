@@ -2,6 +2,6 @@ package processing;
 
 import io.AudioEvent;
 
-public interface SoundDetectionHandler {
+public interface ISoundDetectionHandler {
     void handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent);
 }

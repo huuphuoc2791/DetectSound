@@ -334,6 +334,7 @@ public class AudioFormat {
      *
      * @return a string that describes the format parameters
      */
+
     public String toString() {
         String sEncoding = "";
         if (getEncoding() != null) {

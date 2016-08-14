@@ -1,9 +1,9 @@
 package processing;
 
 import io.AudioEvent;
-import io.AudioProcessor;
+import io.IAudioProcessor;
 
-public class SoundProcessor implements AudioProcessor {
+public class SoundProcessor implements IAudioProcessor {
 	public enum ESoundEstimationAlgorithm {
 
 		YIN,
@@ -27,11 +27,11 @@ public class SoundProcessor implements AudioProcessor {
 	 */
 	private final ISoundDetection detector;
 	
-	private final SoundDetectionHandler handler;
+	private final ISoundDetectionHandler handler;
 
 	public SoundProcessor(ESoundEstimationAlgorithm algorithm, float sampleRate,
-						  int bufferSize,
-						  SoundDetectionHandler handler) {
+                          int bufferSize,
+                          ISoundDetectionHandler handler) {
 		detector = algorithm.getDetector(sampleRate, bufferSize);
 		this.handler = handler;	
 	}

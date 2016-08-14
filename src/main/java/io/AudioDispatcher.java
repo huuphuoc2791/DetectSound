@@ -19,7 +19,7 @@ public class AudioDispatcher implements Runnable {
 	 * The audio stream (in bytes), conversion to float happens at the last
 	 * moment.
 	 */
-	private final AudioInputStream audioInputStream;
+	private final IAudioInputStream IAudioInputStream;
 
 	/**
 	 * This buffer is reused again and again to store audio data using the float
@@ -37,7 +37,7 @@ public class AudioDispatcher implements Runnable {
 	 * A list of registered audio processors. The audio processors are
 	 * responsible for actually doing the digital signal processing
 	 */
-	private final List<AudioProcessor> audioProcessors;
+	private final List<IAudioProcessor> IAudioProcessors;
 
 	/**
 	 * Converter converts an array of floats to an array of bytes (and vice
@@ -111,14 +111,14 @@ public class AudioDispatcher implements Runnable {
 	 *            How much consecutive buffers overlap (in samples). Half of the
 	 *            AudioBufferSize is common (512, 1024) for an FFT.
 	 */
-	public AudioDispatcher(final AudioInputStream stream, final int audioBufferSize, final int bufferOverlap){
+	public AudioDispatcher(final IAudioInputStream stream, final int audioBufferSize, final int bufferOverlap){
 		// The copy on write list allows concurrent modification of the list while
 		// it is iterated. A nice feature to have when adding AudioProcessors while
 		// the io.AudioDispatcher is running.
-		audioProcessors = new CopyOnWriteArrayList<AudioProcessor>();
-		audioInputStream = stream;
+		IAudioProcessors = new CopyOnWriteArrayList<IAudioProcessor>();
+		IAudioInputStream = stream;
 
-		format = audioInputStream.getFormat();
+		format = IAudioInputStream.getFormat();
 		
 			
 		setStepSizeAndOverlap(audioBufferSize, bufferOverlap);
@@ -188,26 +188,26 @@ public class AudioDispatcher implements Runnable {
 	
 
 	/**
-	 * Adds an io.AudioProcessor to the chain of processors.
+	 * Adds an io.IAudioProcessor to the chain of processors.
 	 * 
-	 * @param audioProcessor
-	 *            The io.AudioProcessor to add.
+	 * @param IAudioProcessor
+	 *            The io.IAudioProcessor to add.
 	 */
-	public void addAudioProcessor(final AudioProcessor audioProcessor) {
-		audioProcessors.add(audioProcessor);
-		LOG.fine("Added an audioprocessor to the list of processors: " + audioProcessor.toString());
+	public void addAudioProcessor(final IAudioProcessor IAudioProcessor) {
+		IAudioProcessors.add(IAudioProcessor);
+		LOG.fine("Added an audioprocessor to the list of processors: " + IAudioProcessor.toString());
 	}
 	
 	/**
-	 * Removes an io.AudioProcessor to the chain of processors and calls its <code>processingFinished</code> method.
+	 * Removes an io.IAudioProcessor to the chain of processors and calls its <code>processingFinished</code> method.
 	 * 
-	 * @param audioProcessor
-	 *            The io.AudioProcessor to remove.
+	 * @param IAudioProcessor
+	 *            The io.IAudioProcessor to remove.
 	 */
-	public void removeAudioProcessor(final AudioProcessor audioProcessor) {
-		audioProcessors.remove(audioProcessor);
-		audioProcessor.processingFinished();
-		LOG.fine("Remove an audioprocessor to the list of processors: " + audioProcessor.toString());
+	public void removeAudioProcessor(final IAudioProcessor IAudioProcessor) {
+		IAudioProcessors.remove(IAudioProcessor);
+		IAudioProcessor.processingFinished();
+		LOG.fine("Remove an audioprocessor to the list of processors: " + IAudioProcessor.toString());
 	}
 
 	public void run() {
@@ -233,7 +233,7 @@ public class AudioDispatcher implements Runnable {
 		while (bytesRead != 0 && !stopped) {
 			
 			//Makes sure the right buffers are processed, they can be changed by audio processors.
-			for (final AudioProcessor processor : audioProcessors) {
+			for (final IAudioProcessor processor : IAudioProcessors) {
 				if(!processor.process(audioEvent)){
 					//skip to the next audio processors if false is returned.
 					break;
@@ -270,7 +270,7 @@ public class AudioDispatcher implements Runnable {
 	private void skipToStart() {
 		long skipped = 0l;
 		try{
-			skipped = audioInputStream.skip(bytesToSkip);
+			skipped = IAudioInputStream.skip(bytesToSkip);
 			if(skipped !=bytesToSkip){
 				throw new IOException();
 			}
@@ -287,11 +287,11 @@ public class AudioDispatcher implements Runnable {
 	 */
 	public void stop() {
 		stopped = true;
-		for (final AudioProcessor processor : audioProcessors) {
+		for (final IAudioProcessor processor : IAudioProcessors) {
 			processor.processingFinished();
 		}
 		try {
-			audioInputStream.close();
+			IAudioInputStream.close();
 		} catch (IOException e) {
 			LOG.log(Level.SEVERE, "Closing audio stream error.", e);
 		}
@@ -361,7 +361,7 @@ public class AudioDispatcher implements Runnable {
 		// unless the stream is closed (stopped is true) or no bytes could be read during one iteration 
 		while(!stopped && !endOfStream && totalBytesRead<bytesToRead){
 			try{
-				bytesRead = audioInputStream.read(audioByteBuffer, offsetInBytes + totalBytesRead , bytesToRead - totalBytesRead);
+				bytesRead = IAudioInputStream.read(audioByteBuffer, offsetInBytes + totalBytesRead , bytesToRead - totalBytesRead);
 			}catch(IndexOutOfBoundsException e){
 				// The pipe decoder generates an out of bounds if end
 				// of stream is reached. Ugly hack...

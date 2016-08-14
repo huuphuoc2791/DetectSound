@@ -3,17 +3,17 @@ package app;
 import io.AudioDispatcher;
 import io.AudioEvent;
 import io.Shared;
-import jvm.JVMAudioInputStream;
+import jvm.JVMIAudioInputStream;
 
 
-import processing.SoundDetectionHandler;
+import processing.ISoundDetectionHandler;
 import processing.SoundDetectionResult;
 import processing.SoundProcessor;
 import processing.SoundProcessor.ESoundEstimationAlgorithm;
 
 import javax.sound.sampled.*;
 
-public class SoundDetector implements SoundDetectionHandler {
+public class SoundDetector implements ISoundDetectionHandler {
 
     private AudioDispatcher dispatcher;
     private ISoundDetector iSoundDetector;
@@ -23,7 +23,7 @@ public class SoundDetector implements SoundDetectionHandler {
     }
 
     public void stop() {
-
+        dispatcher.stop();
     }
 
     public void setOnSoundDetected(ISoundDetector soundDetector) {
@@ -43,7 +43,7 @@ public class SoundDetector implements SoundDetectionHandler {
             }
         }
 
-          this.iSoundDetector.onDetected();
+        this.iSoundDetector.onDetected();
         try {
             setNewMixer(newValue);
         } catch (LineUnavailableException | UnsupportedAudioFileException e) {
@@ -71,7 +71,7 @@ public class SoundDetector implements SoundDetectionHandler {
         line.start();
         final AudioInputStream stream = new AudioInputStream(line);
 
-        JVMAudioInputStream audioStream = new JVMAudioInputStream(stream);
+        JVMIAudioInputStream audioStream = new JVMIAudioInputStream(stream);
         // create a new dispatcher
         dispatcher = new AudioDispatcher(audioStream, bufferSize,
                 overlap);
@@ -81,9 +81,6 @@ public class SoundDetector implements SoundDetectionHandler {
 
         new Thread(dispatcher, "Audio dispatching").start();
     }
-
-
-
 
     @Override
     public void handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent) {
@@ -98,7 +95,6 @@ public class SoundDetector implements SoundDetectionHandler {
         run();
         return result;
     }
-
 
 
 }

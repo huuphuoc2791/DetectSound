@@ -3,7 +3,7 @@ package io;
 
 import java.io.IOException;
 
-public interface AudioInputStream {
+public interface IAudioInputStream {
 
 
 	long skip(long bytesToSkip) throws IOException;

@@ -2,18 +2,18 @@
 package jvm;
 
 import io.AudioFormat;
-import io.AudioInputStream;
+import io.IAudioInputStream;
 
 import javax.sound.sampled.AudioFormat.Encoding;
 import java.io.IOException;
 
-public class JVMAudioInputStream implements AudioInputStream {
+public class JVMIAudioInputStream implements IAudioInputStream {
 	
 	private final javax.sound.sampled.AudioInputStream underlyingStream;
 	private final AudioFormat tarsosDSPAudioFormat;
-	public JVMAudioInputStream(javax.sound.sampled.AudioInputStream stream){
+	public JVMIAudioInputStream(javax.sound.sampled.AudioInputStream stream){
 		this.underlyingStream = stream;
-		this.tarsosDSPAudioFormat = JVMAudioInputStream.toTarsosDSPFormat(stream.getFormat());
+		this.tarsosDSPAudioFormat = JVMIAudioInputStream.toTarsosDSPFormat(stream.getFormat());
 	}
 
 	@Override
