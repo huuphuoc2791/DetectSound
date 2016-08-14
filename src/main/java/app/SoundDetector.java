@@ -17,21 +17,12 @@ public class SoundDetector implements ISoundDetectionHandler {
 
     private AudioDispatcher dispatcher;
     private ISoundDetector iSoundDetector;
-
-    public void start() {
-
-    }
+    private ESoundEstimationAlgorithm algo;
+    private int result;
 
     public void stop() {
         dispatcher.stop();
     }
-
-    public void setOnSoundDetected(ISoundDetector soundDetector) {
-        this.iSoundDetector = soundDetector;
-    }
-
-    private ESoundEstimationAlgorithm algo;
-    private int result;
 
     public void run() {
         algo = ESoundEstimationAlgorithm.YIN;
@@ -49,6 +40,10 @@ public class SoundDetector implements ISoundDetectionHandler {
         } catch (LineUnavailableException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setOnSoundDetected(ISoundDetector soundDetector) {
+        this.iSoundDetector = soundDetector;
     }
 
     private void setNewMixer(Mixer mixer) throws LineUnavailableException,

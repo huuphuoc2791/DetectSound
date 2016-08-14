@@ -9,7 +9,7 @@ public class SoundDetectorTest {
     @Test
     public void test(){
         SoundDetector soundDetector =new SoundDetector();
-        soundDetector.detect();
+        soundDetector.run();
     }
 
 }
