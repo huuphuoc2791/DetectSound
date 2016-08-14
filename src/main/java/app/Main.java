@@ -9,6 +9,7 @@ public class Main {
         soundDetector.setOnSoundDetected(()-> {
             // TODO: 8/11/16
             System.out.print("Detected");
+            //Test
         });
 
         soundDetector.run();
