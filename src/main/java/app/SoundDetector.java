@@ -33,7 +33,7 @@ public class SoundDetector implements ISoundDetectionHandler {
     private ESoundEstimationAlgorithm algo;
     private int result;
 
-    private void run() {
+    public void run() {
         algo = ESoundEstimationAlgorithm.YIN;
         System.out.println("Start:");
         Mixer newValue = null;
@@ -91,10 +91,6 @@ public class SoundDetector implements ISoundDetectionHandler {
         }
     }
 
-    public int detect() {
-        run();
-        return result;
-    }
 
 
 }

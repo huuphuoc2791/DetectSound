@@ -11,6 +11,6 @@ public class Main {
             System.out.print("Detected");
         });
 
-        soundDetector.detect();
+        soundDetector.run();
     }
 }
