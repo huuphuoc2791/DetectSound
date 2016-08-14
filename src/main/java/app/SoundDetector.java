@@ -42,8 +42,8 @@ public class SoundDetector implements ISoundDetectionHandler {
         }
     }
 
-    public void setOnSoundDetected(ISoundDetector soundDetector) {
-        this.iSoundDetector = soundDetector;
+    public void setOnSoundDetected(ISoundDetector iSoundDetector) {
+        this.iSoundDetector = iSoundDetector;
     }
 
     private void setNewMixer(Mixer mixer) throws LineUnavailableException,

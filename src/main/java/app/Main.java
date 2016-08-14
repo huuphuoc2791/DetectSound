@@ -14,6 +14,12 @@ public class Main {
             System.out.print("Detected");
         });
         soundDetector.run();
+//        try {
+//            Thread.sleep(3000);
+//        } catch(InterruptedException ex) {
+//            Thread.currentThread().interrupt();
+//        }
+//        System.out.println("Stop!!!");
 //        soundDetector.stop();
     }
 }
