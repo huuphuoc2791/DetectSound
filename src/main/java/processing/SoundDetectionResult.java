@@ -2,44 +2,44 @@
 package processing;
 
 public class SoundDetectionResult {
-	private float pitch;
-	
-	private float probability;
-	
-	private boolean pitched;
-	
-	public SoundDetectionResult(){
-		pitch = -1;
-		probability = -1;
-		pitched = false;
-	}
+    private float frequency;
+
+    private float probability;
+
+    private boolean pitched;
+
+    public SoundDetectionResult(){
+        frequency = -1;
+        probability = -1;
+        pitched = false;
+    }
 	
 	/**
 	 * A copy constructor. Since SoundDetectionResult objects are reused for performance reasons, creating a copy can be practical.
 	 * @param other
 	 */
 	public SoundDetectionResult(SoundDetectionResult other){
-		this.pitch = other.pitch;
-		this.probability = other.probability;
-		this.pitched = other.pitched;
-	}
+        this.frequency = other.frequency;
+        this.probability = other.probability;
+        this.pitched = other.pitched;
+    }
 		 
 	
 	/**
 	 * @return The processing in Hertz.
 	 */
-	public float getPitch() {
-		return pitch;
-	}
+    public float getFrequency() {
+        return frequency;
+    }
 
-	public void setPitch(float pitch) {
-		this.pitch = pitch;
-	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#clone()
-	 */
-	public SoundDetectionResult clone(){
+    public void setFrequency(float frequency) {
+        this.frequency = frequency;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#clone()
+     */
+    public SoundDetectionResult clone(){
 		return new SoundDetectionResult(this);
 	}
 
