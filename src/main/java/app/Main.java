@@ -11,7 +11,7 @@ public class Main {
         SoundDetector soundDetector = new SoundDetector();
         soundDetector.setOnSoundDetected(() -> {
             // TODO: 8/11/16
-            System.out.print("Detected");
+            System.out.println("Detected");
         });
         soundDetector.run();
 //        try {
