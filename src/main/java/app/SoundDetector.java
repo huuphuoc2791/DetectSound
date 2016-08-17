@@ -79,8 +79,8 @@ public class SoundDetector implements ISoundDetectionHandler {
 
     @Override
     public void handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent) {
-        if (soundDetectionResult.getPitch() != -1) {
-            float pitch = soundDetectionResult.getPitch();
+        if (soundDetectionResult.getFrequency() != -1) {
+            float pitch = soundDetectionResult.getFrequency();
             result = (int) Math.floor(pitch);
             System.out.println(result);
         }

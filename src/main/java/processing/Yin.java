@@ -104,7 +104,7 @@ final class Yin implements ISoundDetection {
 			pitchInHertz = -1;
 		}
 		
-		result.setPitch(pitchInHertz);
+		result.setFrequency(pitchInHertz);
 
 		return result;
 	}
