@@ -2,7 +2,7 @@ package processing;
 
 final class Yin implements ISoundDetection {
 
-	private static final double DEFAULT_THRESHOLD = 0.20;
+    private static final double DEFAULT_THRESHOLD = 0.32;
 
 	/**
 	 * The default size of an audio buffer (in samples).

@@ -98,12 +98,12 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
     public boolean detectSound() {
         run();
         List<Integer> list = new ArrayList<>();
-        list.add(134);
-        setListFrequency(list);
+//        list.add(138);
+//        setListFrequency(list);
         this.frequency.addConditionDetection(list);
         for (int frequencyRange : listFrequency) {
             System.out.println(frequencyRange);
-            if ((result > frequencyRange - range) || (result < frequencyRange + range)) {
+            if ((result > frequencyRange - range) && (result < frequencyRange + range)) {
                 return true;
             }
         }

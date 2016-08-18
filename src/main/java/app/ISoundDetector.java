@@ -5,5 +5,5 @@ package app;
  */
 @FunctionalInterface
 public interface ISoundDetector {
-    public void onDetected();
+    void onDetected();
 }

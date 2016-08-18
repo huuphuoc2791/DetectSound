@@ -15,21 +15,21 @@ public class Main {
             // TODO: 8/11/16
             System.out.println("Detected");
         });
-//        soundDetector.run();
-//        try {
-//            Thread.sleep(3000);
-//        } catch(InterruptedException ex) {
-//            Thread.currentThread().interrupt();
-//        }
-//        System.out.println("Stop!!!");
-//        soundDetector.stop();
+
         List<Integer> listRange = new ArrayList<>();
-        listRange.add(199);
+        listRange.add(1973);
         soundDetector.setFrequency(list -> listRange);
+        soundDetector.setListFrequency(listRange);
         if (soundDetector.detectSound()) {
-            System.out.println("Deteted");
+            System.out.println("Trigger");
         }
-        ;
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        System.out.println("Stop!!!");
+        soundDetector.stop();
     }
 
 }

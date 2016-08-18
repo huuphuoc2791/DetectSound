@@ -7,6 +7,6 @@ import java.util.List;
  */
 @FunctionalInterface
 public interface IConditionDetection {
-    public List<Integer> addConditionDetection(List<Integer> list);
+    List<Integer> addConditionDetection(List<Integer> list);
 
 }
