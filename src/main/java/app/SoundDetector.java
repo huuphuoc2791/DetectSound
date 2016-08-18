@@ -95,11 +95,11 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
         return result;
     }
 
+    // this function uses to detect sound, then return result in boolean form
     public boolean detectSound() {
         run();
         List<Integer> list = new ArrayList<>();
-//        list.add(138);
-//        setListFrequency(list);
+        list.add(138);
         this.frequency.addConditionDetection(list);
         for (int frequencyRange : listFrequency) {
             System.out.println(frequencyRange);
@@ -120,6 +120,7 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
         this.listFrequency = listFrequency;
     }
 
+    //add condition Frequency of sound.
     public void setFrequency(IConditionDetection frequency) {
         this.frequency = frequency;
     }
