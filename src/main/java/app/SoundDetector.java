@@ -83,13 +83,12 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
 
 
     @Override
-    public int handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent) {
+    public void handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent) {
         if (soundDetectionResult.getFrequency() != -1) {
             float pitch = soundDetectionResult.getFrequency();
             result = (int) Math.floor(pitch);
             System.out.println(result);
         }
-        return result;
     }
 
     // this function uses to detect sound, then return result in boolean form
