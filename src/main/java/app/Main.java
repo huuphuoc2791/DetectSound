@@ -2,8 +2,6 @@ package app;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by huuphuoc on 8/11/16.

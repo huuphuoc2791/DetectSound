@@ -4,16 +4,13 @@ import io.AudioDispatcher;
 import io.AudioEvent;
 import io.Shared;
 import jvm.JVMIAudioInputStream;
-
-
-import processing.*;
+import processing.ISoundDetectionHandler;
+import processing.SoundDetectionResult;
+import processing.SoundProcessor;
 import processing.SoundProcessor.ESoundEstimationAlgorithm;
-import util.FFT;
 
 import javax.sound.sampled.*;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
