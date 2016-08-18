@@ -6,25 +6,32 @@ import io.Shared;
 import jvm.JVMIAudioInputStream;
 
 
-import processing.ISoundDetectionHandler;
-import processing.SoundDetectionResult;
-import processing.SoundProcessor;
+import processing.*;
 import processing.SoundProcessor.ESoundEstimationAlgorithm;
+import util.FFT;
 
 import javax.sound.sampled.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-public class SoundDetector implements ISoundDetectionHandler {
+public class SoundDetector implements ISoundDetectionHandler, IConditionDetection {
 
     private AudioDispatcher dispatcher;
     private ISoundDetector iSoundDetector;
     private ESoundEstimationAlgorithm algo;
     private int result;
+    private final static int range = 5;
+    private IConditionDetection frequency;
+    private List<Integer> listFrequency = new ArrayList<>();
 
     public void stop() {
         dispatcher.stop();
     }
 
-    public void run() {
+    private void run() {
         algo = ESoundEstimationAlgorithm.YIN;
         System.out.println("Start:");
         Mixer newValue = null;
@@ -52,7 +59,7 @@ public class SoundDetector implements ISoundDetectionHandler {
         if (dispatcher != null) {
             dispatcher.stop();
         }
-        float sampleRate = 44100;
+        float sampleRate = 41000;
         int bufferSize = 1024;
         int overlap = 0;
 
@@ -77,15 +84,43 @@ public class SoundDetector implements ISoundDetectionHandler {
         new Thread(dispatcher, "Audio dispatching").start();
     }
 
+
     @Override
-    public void handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent) {
+    public int handleSound(SoundDetectionResult soundDetectionResult, AudioEvent audioEvent) {
         if (soundDetectionResult.getFrequency() != -1) {
             float pitch = soundDetectionResult.getFrequency();
             result = (int) Math.floor(pitch);
             System.out.println(result);
         }
+        return result;
     }
 
+    public boolean detectSound() {
+        run();
+        List<Integer> list = new ArrayList<>();
+        list.add(134);
+        setListFrequency(list);
+        this.frequency.addConditionDetection(list);
+        for (int frequencyRange : listFrequency) {
+            System.out.println(frequencyRange);
+            if ((result > frequencyRange - range) || (result < frequencyRange + range)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    @Override
+    public List<Integer> addConditionDetection(List<Integer> listFrequency) {
+        Collections.copy(this.listFrequency, listFrequency);
+        return this.listFrequency;
+    }
 
+    public void setListFrequency(List<Integer> listFrequency) {
+        this.listFrequency = listFrequency;
+    }
+
+    public void setFrequency(IConditionDetection frequency) {
+        this.frequency = frequency;
+    }
 }

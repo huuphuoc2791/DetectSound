@@ -1,5 +1,7 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,7 +15,7 @@ public class Main {
             // TODO: 8/11/16
             System.out.println("Detected");
         });
-        soundDetector.run();
+//        soundDetector.run();
 //        try {
 //            Thread.sleep(3000);
 //        } catch(InterruptedException ex) {
@@ -21,5 +23,13 @@ public class Main {
 //        }
 //        System.out.println("Stop!!!");
 //        soundDetector.stop();
+        List<Integer> listRange = new ArrayList<>();
+        listRange.add(199);
+        soundDetector.setFrequency(list -> listRange);
+        if (soundDetector.detectSound()) {
+            System.out.println("Deteted");
+        }
+        ;
     }
+
 }
