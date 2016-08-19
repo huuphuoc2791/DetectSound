@@ -1,8 +1,5 @@
 package app;
 
-import io.AudioEvent;
-import processing.SoundDetectionResult;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +15,36 @@ public class Main {
         });
 
         List<Integer> listRange = new ArrayList<>();
-        listRange.add(1973);
-        soundDetector.setFrequency(list -> listRange);
-        soundDetector.setListFrequency(listRange);
-        if (soundDetector.detectSound()) {
-            System.out.println("Trigger");
+
+//        for (int i = 1260; i < 1320; i++) {
+//            listRange.add(i);
+//        }
+        for (int i = 2200; i < 2270; i++) {
+            listRange.add(i);
         }
+        for (int i = 2430; i < 2470; i++) {
+            listRange.add(i);
+        }
+        for (int i = 2330; i < 2390; i++) {
+            listRange.add(i);
+        }
+        for (int i = 3700; i < 3900; i++) {
+            listRange.add(i);
+        }
+        for (int i = 3550; i < 3670; i++) {
+            listRange.add(i);
+        }
+        for (int i = 1670; i < 1700; i++) {
+            listRange.add(i);
+        }
+
+
+        soundDetector.setFrequencyRange(list -> listRange);
+        soundDetector.setListFrequency(listRange);
+        soundDetector.run();
         try {
-            Thread.sleep(30000);
+            Thread.sleep(3000);
+
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }

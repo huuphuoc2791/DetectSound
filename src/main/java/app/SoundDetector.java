@@ -20,15 +20,16 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
     private ISoundDetector iSoundDetector;
     private ESoundEstimationAlgorithm algo;
     private int result;
-    private final static int range = 5;
+    private final static int range = 20;
     private IConditionDetection frequency;
     private List<Integer> listFrequency = new ArrayList<>();
+    private boolean isDetected = false;
 
     public void stop() {
         dispatcher.stop();
     }
 
-    private void run() {
+    public void run() {
         algo = ESoundEstimationAlgorithm.YIN;
         System.out.println("Start:");
         Mixer newValue = null;
@@ -88,24 +89,29 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
             float pitch = soundDetectionResult.getFrequency();
             result = (int) Math.floor(pitch);
             System.out.println(result);
+            if (detectSound()) {
+//                isDetected = true;
+                System.out.println("Trigger Event");
+            }
         }
     }
 
-    // this function uses to detect sound, then return result in boolean form
+    //add condition of sample sound to compare when record. We can add out side.
     private void addCondition() {
         if (listFrequency.isEmpty()) {
             List<Integer> list = new ArrayList<>();
-            list.add(1974);
+            list.add(2586);
+            list.add(2620);
+            list.add(2720);
             setListFrequency(list);
         }
     }
+    // this function uses to detect sound, then return result in boolean form
 
     public boolean detectSound() {
-        run();
         addCondition();
         for (int frequencyRange : listFrequency) {
-            System.out.println(frequencyRange);
-            if ((result > frequencyRange - range) && (result < frequencyRange + range)) {
+            if (result == frequencyRange) {
                 return true;
             }
         }
@@ -123,8 +129,15 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
     }
 
     //add condition Frequency of sound.
-    public void setFrequency(IConditionDetection frequency) {
+    public void setFrequencyRange(IConditionDetection frequency) {
         this.frequency = frequency;
     }
 
+    public boolean isDetected() {
+        return isDetected;
+    }
+
+    public void setDetected(boolean detected) {
+        isDetected = detected;
+    }
 }
