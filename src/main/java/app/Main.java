@@ -16,28 +16,43 @@ public class Main {
 
         List<Integer> listRange = new ArrayList<>();
 
-//        for (int i = 1260; i < 1320; i++) {
+//        for (int i = 1200; i < 1240; i++) {
 //            listRange.add(i);
 //        }
-        for (int i = 2200; i < 2270; i++) {
-            listRange.add(i);
-        }
-        for (int i = 2430; i < 2470; i++) {
-            listRange.add(i);
-        }
-        for (int i = 2330; i < 2390; i++) {
-            listRange.add(i);
-        }
-        for (int i = 3700; i < 3900; i++) {
-            listRange.add(i);
-        }
-        for (int i = 3550; i < 3670; i++) {
-            listRange.add(i);
-        }
-        for (int i = 1670; i < 1700; i++) {
-            listRange.add(i);
-        }
+//        for (int i = 2220; i < 2270; i++) {
+//            listRange.add(i);
+//        }
+//        for (int i = 2280; i < 2300; i++) {
+//            listRange.add(i);
+//        }
+//        for (int i = 2430; i < 2470; i++) {
+//            listRange.add(i);
+//        }
+//        for (int i = 2340; i < 2390; i++) {
+//            listRange.add(i);
+//        }
+//        for (int i = 2650; i < 2720; i++) {
+//            listRange.add(i);
+//        }
+//        for (int i = 3770; i < 3840; i++) {
+//            listRange.add(i);
+//        }
+//        for (int i = 3680; i < 3760; i++) {
+//            listRange.add(i);
+//        }
+//        for (int i = 3510; i < 3610; i++) {
+//            listRange.add(i);
+//        }
+//        for (int i = 3850; i < 3900; i++) {
+//            listRange.add(i);
+////        }
+//        for (int i = 1820; i < 1890; i++) {
+//            listRange.add(i);
+//        }
 
+        for (int i = 2200; i < 2300; i++) {
+            listRange.add(i);
+        }
 
         soundDetector.setFrequencyRange(list -> listRange);
         soundDetector.setListFrequency(listRange);
@@ -49,6 +64,7 @@ public class Main {
             Thread.currentThread().interrupt();
         }
         System.out.println("Stop!!!");
+        System.out.println(soundDetector.isDetected());
         soundDetector.stop();
     }
 

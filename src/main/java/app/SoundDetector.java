@@ -90,7 +90,7 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
             result = (int) Math.floor(pitch);
             System.out.println(result);
             if (detectSound()) {
-//                isDetected = true;
+                isDetected = true;
                 System.out.println("Trigger Event");
             }
         }
