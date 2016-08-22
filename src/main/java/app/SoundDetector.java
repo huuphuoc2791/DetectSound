@@ -10,9 +10,7 @@ import processing.SoundProcessor;
 import processing.SoundProcessor.ESoundEstimationAlgorithm;
 
 import javax.sound.sampled.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SoundDetector implements ISoundDetectionHandler, IConditionDetection {
 
@@ -90,8 +88,10 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
             result = (int) Math.floor(pitch);
             System.out.println(result);
             if (detectSound()) {
-                isDetected = true;
-                System.out.println("Trigger Event");
+                if (setTimeDetection()) {
+                    isDetected = true;
+                    System.out.println("Trigger Event");
+                }
             }
         }
     }
@@ -108,7 +108,8 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
     }
     // this function uses to detect sound, then return result in boolean form
 
-    public boolean detectSound() {
+
+    private boolean detectSound() {
         addCondition();
         for (int frequencyRange : listFrequency) {
             if (result == frequencyRange) {
@@ -116,6 +117,23 @@ public class SoundDetector implements ISoundDetectionHandler, IConditionDetectio
             }
         }
         return false;
+    }
+
+    public boolean setTimeDetection() {
+        long tStart = System.currentTimeMillis();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        long tEnd = System.currentTimeMillis();
+
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+        if (elapsedSeconds < 1.1)
+            return true;
+        return false;
+
     }
 
     @Override

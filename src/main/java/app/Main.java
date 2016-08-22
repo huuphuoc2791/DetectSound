@@ -16,9 +16,9 @@ public class Main {
 
         List<Integer> listRange = new ArrayList<>();
 
-//        for (int i = 1200; i < 1240; i++) {
-//            listRange.add(i);
-//        }
+        for (int i = 1200; i < 1240; i++) {
+            listRange.add(i);
+        }
 //        for (int i = 2220; i < 2270; i++) {
 //            listRange.add(i);
 //        }
@@ -50,7 +50,7 @@ public class Main {
 //            listRange.add(i);
 //        }
 
-        for (int i = 2200; i < 2300; i++) {
+        for (int i = 2340; i < 2430; i++) {
             listRange.add(i);
         }
 
@@ -58,7 +58,7 @@ public class Main {
         soundDetector.setListFrequency(listRange);
         soundDetector.run();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(5008);
 
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
